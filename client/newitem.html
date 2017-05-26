@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Fresh Inventory</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  
+</head>
+  <nav>
+    <ul>
+      
+      <a href="index.html"><li class="logo">Fresh Inventory</li></a>
+       	<button class="logo" id="navBtn">&#9660;</button>
+      <a href="takeinventory.html"><li class="navItem">Take Inventory</li></a>
+      <a href="viewinventory.html"><li class="navItem">View Inventory</li></a>
+      <a href="newitem.html"><li class="navItem">Add Item</li></a>
+      <a href="itemlist.html"><li class="navItem">View Items</li></a>
+    </ul>
+  </nav>
+<body>
+  <div class="splash">
+   <h3>Add new item</h3>
+    <form>
+    <label for="name"  class="formControl">Name:</label>
+    <input type="text" name="name" id="name" class="formControl" />
+    <label for="UPC"  class="formControl">PLU/UPC:</label>
+    <input type="text" name="UPC" id="UPC" class="formControl" />
+    <label for="image"  class="formControl">Image link:</label>
+    <input type="text" name="image" id="image" class="formControl" />
+    <label for="bulk"  class="formControl">Bulk:</label>
+    <input type="checkbox" name="bulk" class="formControl cbx" id="bulk"value="bulk"></input>
+    <input type="submit" value="Submit" class="formControl" />
+  </form>
+  </div>
+  
+  
+
+  <script src="/js/app.js"></script>
+
+</body>
+<!-- 2017 Henry Fritz Design & Development -->
+</html>

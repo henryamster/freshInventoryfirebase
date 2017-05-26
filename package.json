@@ -1,0 +1,11 @@
+{
+  "name": "Fresh Inventory",
+  "version": "0.0.1",
+  "description": "Inventory System for private company use",
+  "main": "server.js",
+  "repository": "",
+  "author": "Henry Fritz Design Development",
+  "dependencies": {
+    "express": "~3.2.4"
+  }
+}
