@@ -61,7 +61,7 @@ input.formControl{
     border-radius:7px;
 }
 label.formControl{
-    color:rgb(189,88,18);
+    color:rgb(129,88,118);
     display: block;
     text-align: center
 }
@@ -133,7 +133,9 @@ nav ul a li.logo{
 }
 nav ul a li{
     display:block;
+    
 }
+
 .navItem{
     display:none;
     font-size:6vh;
