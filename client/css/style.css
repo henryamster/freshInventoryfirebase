@@ -39,6 +39,7 @@ h3 {
 }
 /*Avacado Animation ID */
 #avo {
+    padding-top:10vh;
       max-height:400px;
     animation-name: spin;
     animation-duration: 4000ms;
