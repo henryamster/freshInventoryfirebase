@@ -1,17 +1,18 @@
 /* item submission logic*/
 
- var name = document.getElementById("name");
+  var item = document.getElementById("name");
   var upc = document.getElementById("UPC");
   var image = document.getElementById("image");
   var bulk = document.getElementById("bulk");
-  
+  console.log(item.value + upc.value + image.value + bulk.value);
   var submitBtn = document.getElementById("submit");
  if (submitBtn)
- {submitBtn.addEventListener("click", function(){createNewItem()});
- }
+ {submitBtn.addEventListener("click", function(){createNewItem()});}
+ console.log(firebase.database().ref().child('items'));
+ console.log(item.value + upc.value + image.value + bulk.value);
  function createNewItem(){
   var newItem = {
-   title: name.value,
+   name: item.value,
    upc: upc.value,
    image: image.value,
    bulk: bulk.value
