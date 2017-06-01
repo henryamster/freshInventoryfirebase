@@ -9,6 +9,8 @@ var store = document.getElementById("storeNumber");
 var submit = document.getElementById("submit");
   submit.disabled = true; //default no submit without password
 //var google = document.getElementById('google');
+
+//manual password check function
 function pwCheck(){
 
   if (password.value != passwordVerify.value || password.value.length <1){
@@ -22,7 +24,7 @@ function pwCheck(){
   passwordVerify.style.background= 'green';
   }
 }
-
+//manual emailcheck function
 function emailCheck(){
 
   if (email.value.length <5 || !email.value.includes("@")){
@@ -36,10 +38,11 @@ function emailCheck(){
   email.style.background= 'green';
   }
 }
-
+//manual store number check function
 function storeCheck(){
+  var numberTest = /^([1-9][0-9]{0,2}|1000)$/;
   
-  if (store.value.length <1 || store.value.length>3 ){
+  if (store.value.length <1 || store.value.length>3 || !numberTest.test(store.value)){
   store.style.background = 'red';
   store.style.background = 'red';
   submit.disabled = true;
@@ -90,7 +93,7 @@ function createNewUser() {
     //return updates to database
     
       alert("account created for" + em + "!!");
-     return firebase.database.ref().update(updates);
+     return firebase.database().ref().update(updates);
       }
    
   } 

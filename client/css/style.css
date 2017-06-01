@@ -140,7 +140,7 @@ nav ul a li{
 .navItem{
     display:none;
     font-size:6vh;
-    background: #d4df81;
+    background: rgba(212, 223, 129,0.2);
     margin-right:10%;
     border-top:2px double rgb(211,240,14);
 }

@@ -10,6 +10,7 @@
   };
   firebase.initializeApp(config);
   var itemsRef = firebase.database().ref('items/');
+  var usersRef = firebase.database().ref('users/');
   var navVisible=false;
  
  //vanilla menu manipulation 
@@ -43,4 +44,4 @@
 }
 
 //firebase__>
-/* item submission logic*/
+
