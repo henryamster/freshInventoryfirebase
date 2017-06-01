@@ -44,4 +44,16 @@
 }
 
 //firebase__>
-
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    
+    var userEmail = user.email;
+    
+    document.getElementsByClassName('h3').innerHTML("Hello, " + userEmail);
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+  }
+});

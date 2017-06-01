@@ -16,10 +16,10 @@
     <h1>Fresh Inventory</h1>
     <form>
       <label for="name"  class="formControl">Name:</label>
-    <input type="text" name="name" id="name" class="formControl" />
+    <input type="text" name="email" id="email" class="formControl" onkeyup="emailCheck();" />
     <br/>
     <label for="password"  class="formControl">Password:</label>
-    <input type="password" name ="password" id="password" class="formControl" />
+    <input type="password" name ="password" id="password" class="formControl"  onkeyup="pwCheck();" />
     <input type="submit" value="Submit" class="formControl" id="submit" />
   </form>
   <p class="smallText"> Login or <a href="newuser.html">create a new account</a></p>
@@ -28,6 +28,7 @@
   
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
   <script src="/js/app.js"></script>
+  <script src="/js/login.js"></script>
 
 </body>
 <!-- 2017 Henry Fritz Design & Development -->
