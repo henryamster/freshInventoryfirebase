@@ -142,6 +142,7 @@ nav ul a li{
     font-size:6vh;
     background: #d4df81;
     margin-right:10%;
+    border-top:2px double rgb(211,240,14);
 }
 #navBtn{
     display:inline;
