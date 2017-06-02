@@ -40,6 +40,12 @@ firebase.auth().signInWithEmailAndPassword(em, pw).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
+  document.getElementsByClassName('smallText')[0].innerHTML =  errorMessage;
+   document.getElementsByClassName('smallText')[0].style.color='rgb(220,220,14)';
+   document.getElementsByClassName('smallText')[0].style.fontStyle="italic";
+   
+  
+  
   // ...
 });
 }

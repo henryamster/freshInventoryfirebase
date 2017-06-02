@@ -3,8 +3,21 @@ function clearSearch(){
 }
 
 function filterSearch(){
+    var tableNode = document.getElementsByTagName("table")[0];
+    while (tableNode.hasChildNodes()) {
+    tableNode.removeChild(tableNode.lastChild);
+}
    
    var search =  document.getElementById('search').value;
+   var itemsRef = firebase.database().ref('items/');
+  itemsRef.orderByChild('name')
+                 .startAt(search)
+                 .endAt(search+"\uf8ff")
+                 .on("value", function (snapshot){
+                     console.log(snapshot);
+                  itemLoader(snapshot);   
+                 });
+                 
 /*query
   .orderByValue()
   .startAt(search).endAt(search)
@@ -17,13 +30,13 @@ function filterSearch(){
 
 var itemsRef = firebase.database().ref('items/');
   //load blogposts
-itemsRef.orderByChild("date").limitToLast(40).on('value', function(snapshot) {
+itemsRef.limitToLast(40).on('value', function(snapshot) {
   itemLoader(snapshot.val())});
 function itemLoader(snapshot){
    //load up each individual blogpost snapshot, with ID values
-   for (var postID in snapshot) {
-    var postIDRef = firebase.database().ref('items/' + postID);
-    postIDRef.on('value', function(snapshot){
+   for (var itemID in snapshot) {
+    var itemIDRef = firebase.database().ref('items/' + itemID);
+    itemIDRef.on('value', function(snapshot){
      poster(snapshot.val())})
 }
 };
