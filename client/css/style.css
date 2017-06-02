@@ -182,6 +182,7 @@ nav ul a li{
     background: rgba(212, 223, 129,0.2);
     margin-right:10%;
     border-top:2px double rgb(211,240,14);
+    margin-left:10vw;
 }
 #navBtn{
     display:inline;

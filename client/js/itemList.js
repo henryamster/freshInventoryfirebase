@@ -3,7 +3,16 @@ function clearSearch(){
 }
 
 function filterSearch(){
-    document.getElementById('search').value;
+   
+   var search =  document.getElementById('search').value;
+/*query
+  .orderByValue()
+  .startAt(search).endAt(search)
+  .on('value', function(snapshot) { 
+      var result = snapshot.val();
+      //do whatever you want.
+      itemLoader(result);
+  });*/
 }
 
 var itemsRef = firebase.database().ref('items/');
