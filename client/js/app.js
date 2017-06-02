@@ -43,34 +43,17 @@
 }
 }
 
-//firebase__>
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    // User is signed in.
-    console.log("logged in");
+    
     var userEmail = user.email;
-    
-    var greet =document.getElementById("greet");
-    
-    greet.innerHTML="Hello, " + userEmail;
-    
-    
-   var elems= document.getElementsByClassName('formControl');
-    for (var i=0;i<elems.length;i+=1){
-  elems[i].style.display = 'none';
-  
-  document.getElementsByClassName('smallText')[0].style.display="none";
-  
- 
-  
-}
+    if(navVisible){
+      document.getElementById('logoutNav').style.display ='inline-block';
+    }
     // ...
   } else {
-          document.getElementById('logoutNav').style.display='none';
-    // User is signed out.
-    // ...
-  }
-});
+          document.getElementById('logoutNav').style.display ='none';}
+})
 
  function logOut(){
        firebase.auth().signOut();

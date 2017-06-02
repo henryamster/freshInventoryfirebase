@@ -43,3 +43,32 @@ firebase.auth().signInWithEmailAndPassword(em, pw).catch(function(error) {
   // ...
 });
 }
+
+//firebase__>
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    console.log("logged in");
+    var userEmail = user.email;
+    
+    var greet =document.getElementById("greet");
+    
+    greet.innerHTML="Hello, " + userEmail;
+    
+    
+   var elems= document.getElementsByClassName('formControl');
+    for (var i=0;i<elems.length;i+=1){
+  elems[i].style.display = 'none';
+  
+  document.getElementsByClassName('smallText')[0].style.visibility="visible";
+  
+ 
+  
+}
+    // ...
+  } else {
+          document.getElementById('logoutNav').style.visibility ='hidden';
+    // User is signed out.
+    // ...
+  }
+});
