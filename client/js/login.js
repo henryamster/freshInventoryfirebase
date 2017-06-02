@@ -30,7 +30,7 @@ function pwCheck(){
   }
 }
 
-submit.addEventListener("click", function() {signIn();});
+submit.addEventListener("click", signIn, false);
 function signIn(){
     
 
@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     for (var i=0;i<elems.length;i+=1){
   elems[i].style.display = 'none';
   
-  document.getElementsByClassName('smallText')[0].style.visibility="visible";
+  document.getElementsByClassName('smallText')[0].style.visibility="hidden";
   
  
   
