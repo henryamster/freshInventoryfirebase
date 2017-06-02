@@ -32,6 +32,7 @@ function pwCheck(){
 
 submit.addEventListener("click", signIn, false);
 function signIn(){
+    document.getElementsByTagName('nav')[0].style.display = "block";
     
 
 var em = email.value;
@@ -57,6 +58,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log("logged in");
     var userEmail = user.email;
     
+    
     var greet =document.getElementById("greet");
     
     greet.innerHTML="Hello, " + userEmail;
@@ -73,7 +75,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 }
     // ...
   } else {
-          document.getElementById('logoutNav').style.visibility ='hidden';
+          document.getElementById('logoutNav').style.display ='inline-block';
     // User is signed out.
     // ...
   }

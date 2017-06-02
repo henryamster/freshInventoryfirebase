@@ -48,12 +48,17 @@ firebase.auth().onAuthStateChanged(function(user) {
     
     var userEmail = user.email;
     if(navVisible){
+       document.getElementsByTagName('nav')[0].style.display = "block";
       document.getElementById('logoutNav').style.display ='inline-block';
+      
     }
     // ...
   } else {
+      document.getElementsByTagName('nav')[0].style.display = "none";
           document.getElementById('logoutNav').style.display ='none';}
 })
+
+
 
  function logOut(){
        firebase.auth().signOut();

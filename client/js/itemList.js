@@ -69,7 +69,7 @@ var upcNode = document.createElement("td");
  var bulkNode = document.createElement("td");  
    bulkNode.className = "bulk Tbl";
   var bulkTextNode = document.createTextNode(snapshot.bulk);   
-   if(!snapshot.bulk){ bulkTextNode = "";}
+   if(snapshot.bulk == "true"){ bulkTextNode = "";}
   bulkNode.appendChild(bulkTextNode);   
 
 
