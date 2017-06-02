@@ -47,13 +47,31 @@
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    
+    console.log("logged in");
     var userEmail = user.email;
     
-    document.getElementsByClassName('h3').innerHTML("Hello, " + userEmail);
+    var greet =document.getElementById("greet");
+    
+    greet.innerHTML="Hello, " + userEmail;
+    
+    
+   var elems= document.getElementsByClassName('formControl');
+    for (var i=0;i<elems.length;i+=1){
+  elems[i].style.display = 'none';
+  
+  document.getElementsByClassName('smallText')[0].style.display="none";
+  
+ 
+  
+}
     // ...
   } else {
     // User is signed out.
     // ...
   }
 });
+
+ function logOut(){
+       firebase.auth().signOut();
+       console.log("signed out");
+  }
