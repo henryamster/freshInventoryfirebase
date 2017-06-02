@@ -17,6 +17,9 @@ body {
     background: radial-gradient(#f4ff81, #43a047);
     font-weight: 300;
 }
+.center {
+    text-align:center;
+}
 .splash {
     display: flex;
     flex: 1 0 auto;
@@ -124,7 +127,26 @@ nav ul a li.logo{
 #navBtn{
     display:none;
 }
+table{
+   padding-top:0;
+}
+#tableHead{
+    background:#f4ff81;
+    color:rgb(25,25,25);
+    font-size:20px;
+}
 
+td{
+    padding:10px 8vw;
+    font-weight:thin;
+    color:white;
+}
+tr{
+    background:rgba(255,255,255,0.4);
+}
+tr:nth-of-type(2){
+    background:rgba(0,0,0,0.1);
+}
 /* Mobile styles */
 
 @media only screen and (max-width: 989px) { 

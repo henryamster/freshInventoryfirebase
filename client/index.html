@@ -19,7 +19,7 @@
       <a href="viewinventory.html"><li class="navItem">View Inventory</li></a>
       <a href="newitem.html"><li class="navItem">Add Item</li></a>
       <a href="itemlist.html"><li class="navItem">View Items</li></a>
-      <a href="index.html" oncclick="logOut();"><li class="navItem">Logout</li></a>
+      <a href="index.html" onclick="logOut();"><li class="navItem" id="logoutNav">Logout</li></a>
     </ul>
   </nav>
   
@@ -33,7 +33,7 @@
     <br/>
     <label for="password"  class="formControl">Password:</label>
     <input type="password" name ="password" id="password" class="formControl"  onkeyup="pwCheck();" />
-    <input type="submit" value="Submit" class="formControl" id="submit" />
+    <input type="submit" value="Submit" class="formControl" id="submit" onclick="signIn();" />
   </form>
   <p class="smallText"> Login or <a href="newuser.html">create a new account</a></p>
   </div>

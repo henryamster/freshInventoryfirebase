@@ -66,6 +66,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 }
     // ...
   } else {
+          document.getElementById('logoutNav').style.display='none';
     // User is signed out.
     // ...
   }
