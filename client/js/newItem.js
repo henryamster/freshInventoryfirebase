@@ -12,7 +12,7 @@
  console.log(item.value + upc.value + image.value + bulk.value);
  function createNewItem(){
   var newItem = {
-   name: item.value,
+   name: item.value.toUpperCase(),
    upc: upc.value,
    image: image.value,
    bulk: bulk.value

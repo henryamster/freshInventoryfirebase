@@ -10,7 +10,7 @@ function filterSearch(){
     tableNode.removeChild(tableNode.firstChild);
 }
    
-   var search =  document.getElementById('search').value;
+   var search =  document.getElementById('search').value.toUpperCase();
    var itemsRef = firebase.database().ref('items/');
   itemsRef.orderByChild('name')
                 
