@@ -75,7 +75,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 }
     // ...
   } else {
+         if(window.innerWidth > 1075){
           document.getElementById('logoutNav').style.display ='inline-block';
+         }
     // User is signed out.
     // ...
   }

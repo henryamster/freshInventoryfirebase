@@ -1,22 +1,26 @@
+
+
 function clearSearch(){
     document.getElementById('search').value = "";
 }
 
 function filterSearch(){
     var tableNode = document.getElementsByTagName("table")[0];
-    while (tableNode.hasChildNodes()) {
-    tableNode.removeChild(tableNode.lastChild);
+    while (tableNode.childNodes.length>2) {
+    tableNode.removeChild(tableNode.firstChild);
 }
    
    var search =  document.getElementById('search').value;
-   var itemsRef = firebase.database().ref('items/');
+   //var itemsRef = firebase.database().ref('items/');
   itemsRef.orderByChild('name')
                  .startAt(search)
                  .endAt(search+"\uf8ff")
-                 .on("value", function (snapshot){
+                 
+                 .once("value", function (snapshot){
+                     
                      console.log(snapshot);
-                  itemLoader(snapshot);   
-                 });
+                  poster(snapshot);   
+            });
                  
 /*query
   .orderByValue()
@@ -28,6 +32,7 @@ function filterSearch(){
   });*/
 }
 
+
 var itemsRef = firebase.database().ref('items/');
   //load blogposts
 itemsRef.limitToLast(40).on('value', function(snapshot) {
@@ -35,7 +40,8 @@ itemsRef.limitToLast(40).on('value', function(snapshot) {
 function itemLoader(snapshot){
    //load up each individual blogpost snapshot, with ID values
    for (var itemID in snapshot) {
-    var itemIDRef = firebase.database().ref('items/' + itemID);
+    var itemIDRef = firebase.database().ref('items/' + itemID );
+   // console.log(firebase.database().ref('items/' + itemID + '/name'));
     itemIDRef.on('value', function(snapshot){
      poster(snapshot.val())})
 }
@@ -43,16 +49,19 @@ function itemLoader(snapshot){
 function poster(snapshot){
     
 
-var art = document.getElementsByTagName("table")[0];
+var anchor = document.getElementsByTagName("table")[0];
 //create tr
-var artic = document.createElement("tr");
+var tableRow = document.createElement("tr");
 
- if (snapshot.image.length >0){
+ if (snapshot.image){
 var imageNode = document.createElement("img");
 var imageTdNode = document.createElement('td');
   imageNode.src = snapshot.image;
   imageNode.className = "listImage";
   imageTdNode.appendChild(imageNode);
+ }
+ else{
+     var imageTdNode = document.createElement('td');
  }
 
 
@@ -74,14 +83,15 @@ var upcNode = document.createElement("td");
 
 
 
+  tableRow.appendChild(imageTdNode);
 
-  artic.appendChild(imageTdNode);
-  artic.appendChild(nameNode);
-  artic.appendChild(upcNode);
-  artic.appendChild(bulkNode);
+  tableRow.appendChild(nameNode);
+  tableRow.appendChild(upcNode);
+  tableRow.appendChild(bulkNode);
 
 
-  if (snapshot.name.length>0){
-  art.insertBefore(artic, art.firstChild)
+  if (snapshot.name){
+  anchor.insertBefore(tableRow, anchor.firstChild)
   }
 }
+
