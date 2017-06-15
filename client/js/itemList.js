@@ -11,17 +11,19 @@ function filterSearch(){
 }
    
    var search =  document.getElementById('search').value;
-   //var itemsRef = firebase.database().ref('items/');
+   var itemsRef = firebase.database().ref('items/');
   itemsRef.orderByChild('name')
-                 .startAt(search)
+                
+               .startAt(search)
                  .endAt(search+"\uf8ff")
                  
                  .once("value", function (snapshot){
                      
                      console.log(snapshot);
-                  poster(snapshot);   
+                  itemLoader(snapshot.val());   
             });
-                 
+                 //  .startAt(search)
+                 //.endAt(search+"\uf8ff")
 /*query
   .orderByValue()
   .startAt(search).endAt(search)
@@ -34,11 +36,11 @@ function filterSearch(){
 
 
 var itemsRef = firebase.database().ref('items/');
-  //load blogposts
+  //load items reference
 itemsRef.limitToLast(40).on('value', function(snapshot) {
   itemLoader(snapshot.val())});
 function itemLoader(snapshot){
-   //load up each individual blogpost snapshot, with ID values
+   //load up each individual item
    for (var itemID in snapshot) {
     var itemIDRef = firebase.database().ref('items/' + itemID );
    // console.log(firebase.database().ref('items/' + itemID + '/name'));
@@ -47,7 +49,7 @@ function itemLoader(snapshot){
 }
 };
 function poster(snapshot){
-    
+    console.log(snapshot.name + snapshot.image + snapshot.upc + snapshot.bulk);
 
 var anchor = document.getElementsByTagName("table")[0];
 //create tr
