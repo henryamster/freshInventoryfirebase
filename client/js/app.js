@@ -1,14 +1,22 @@
 
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCBNzlAWE4xyJ9YdYRymo7WEgY1gxOVhcE",
-    authDomain: "fresh-inventory.firebaseapp.com",
-    databaseURL: "https://fresh-inventory.firebaseio.com",
-    projectId: "fresh-inventory",
-    storageBucket: "fresh-inventory.appspot.com",
-    messagingSenderId: "566408288574"
+ const config = {
+    apiKey: "AIzaSyAMv--lZ8FEHMUb02QtswpuuTTVGd18cfI",
+    authDomain: "inv-1d9af.firebaseapp.com",
+    databaseURL: "https://inv-1d9af.firebaseio.com",
+    projectId: "inv-1d9af",
+    storageBucket: "inv-1d9af.appspot.com",
+    messagingSenderId: "761139474826"
   };
-  firebase.initializeApp(config);
+  
+firebase.initializeApp(config);
+
+
+  //Initialize Firestore DB
+var db = firebase.firestore();
+
+
+//OLD STUFF
+
   var itemsRef = firebase.database().ref('items/');
   var usersRef = firebase.database().ref('users/');
   var navVisible=false;

@@ -14,6 +14,7 @@ app.use(express.static('client'));
 
 
 app.listen(process.env.PORT, process.env.IP);
+var firebase = require("firebase");
 
 console.log("Server running at ", process.env.IP + ":" + process.env.PORT);
 

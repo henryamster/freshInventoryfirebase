@@ -1,5 +1,5 @@
 {
-  "name": "Fresh Inventory",
+  "name": "FreshInventory",
   "version": "0.0.1",
   "description": "Inventory System for private company use",
   "main": "server.js",

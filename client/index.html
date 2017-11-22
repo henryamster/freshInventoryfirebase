@@ -6,7 +6,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/style.css" type="text/css" />
-  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-app.js"></script>
 </head>
 
 <body>
@@ -33,13 +33,14 @@
     <br/>
     <label for="password"  class="formControl">Password:</label>
     <input type="password" name ="password" id="password" class="formControl"  onkeyup="pwCheck();" />
-    <input value="Submit" class="formControl" id="submit" />
+    <input type="button" value="Submit" class="formControl" id="submit" />
   </form>
   <p class="smallText"> Login or <a href="newuser.html">create a new account</a></p>
   </div>
   
   
-<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/login.js"></script>
 
