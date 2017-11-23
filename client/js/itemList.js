@@ -1,6 +1,6 @@
 var anchor = document.getElementsByTagName("table")[0];
 var productRef = db.collection("Product");
-productRef.where("bulk", "==", true)
+productRef
     .get()
     .then(function(snapshot) {
         snapshot.forEach(function(doc) {
@@ -24,11 +24,11 @@ function clearSearch(){
 function filterSearch(){
     var search =  document.getElementById('search').value;
     
-while (anchor.firstChild) {
+while (anchor.firstChild.nextSibling) {
     anchor.removeChild(anchor.firstChild);
 }
     
-    db.collection("Product").where("description", "<=", search)
+    db.collection("Product").where("description", ">=", search)
     .get()
     .then(function(snapshot) {
         snapshot.forEach(function(doc) {
@@ -87,7 +87,7 @@ var upcNode = document.createElement("td");
 
 // Only post item if description is included
   if (doc.data().description){
-  anchor.insertBefore(tableRow, anchor.firstChild)
+  anchor.insertBefore(tableRow, anchor.firstChild.nextSibling)
   }
 }
 

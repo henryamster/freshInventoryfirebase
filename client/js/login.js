@@ -63,7 +63,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     
     greet.innerHTML="Hello, " + userEmail;
     
-    
+
    var elems= document.getElementsByClassName('formControl');
     for (var i=0;i<elems.length;i+=1){
   elems[i].style.display = 'none';
