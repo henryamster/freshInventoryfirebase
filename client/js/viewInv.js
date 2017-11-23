@@ -1,7 +1,21 @@
 var anchor = document.getElementsByTagName("table")[0];
-var inventoryRef = db.collection("Inventory");
- var stID=161;
-inventoryRef
+var stID;
+   firebase.auth().onAuthStateChanged(function(user) {
+var uid= user.uid;
+var userRef = db.collection("Users").where("userID",  "==", uid);
+
+userRef.get()
+    .then(function(snapshot) {
+        snapshot.forEach(function(doc) {
+            stID= doc.data().storeID;
+            console.log(doc.data().storeID, " => ", doc.data())})});
+            
+
+
+
+   var inventoryRef = db.collection("Inventory");
+ window.setTimeout(function(){  
+inventoryRef.where("storeID", "==", stID)
     .get()
     .then(function(snapshot) {
         snapshot.forEach(function(doc) {
@@ -12,37 +26,8 @@ inventoryRef
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-
-/*
-   firebase.auth().onAuthStateChanged(function(user) {
-while (anchor.firstChild) {
-    anchor.removeChild(anchor.firstChild);
-}
-var uid= user.uid;
-var userRef = db.collection("Users").where("userID",  "==", uid);
-
-userRef.get()
-    .then(function(snapshot) {
-        snapshot.forEach(function(doc) {
-            stID= doc.data().storeID;
-            console.log(stID);
-            console.log(doc.data().storeID, " => ", doc.data())})});
-            
-*/
-
-/*console.log(stID);
-    inventoryRef.where("storeID", "<=", stID).get()
-    .then(function(snapshot) {
-        snapshot.forEach(function(doc) {
-            console.log(doc.id, " => ", doc.data());
-            poster(doc);
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-*/
-
+console.log(stID);
+},1000);
 // retrieve items and display them in a table
 function poster(doc){
     console.log( doc.data().date + doc.data().storeID + doc.data().userId);
@@ -88,4 +73,5 @@ var storeID = document.createElement("td");
   }
 }
 
-//});
+}
+);

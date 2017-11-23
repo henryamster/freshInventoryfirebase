@@ -24,7 +24,7 @@ function clearSearch(){
 function filterSearch(){
     var search =  document.getElementById('search').value;
     
-while (anchor.firstChild.nextSibling) {
+while (anchor.firstChild) {
     anchor.removeChild(anchor.firstChild);
 }
     
@@ -87,7 +87,7 @@ var upcNode = document.createElement("td");
 
 // Only post item if description is included
   if (doc.data().description){
-  anchor.insertBefore(tableRow, anchor.firstChild.nextSibling)
+  anchor.insertBefore(tableRow, anchor.firstChild)
   }
 }
 
