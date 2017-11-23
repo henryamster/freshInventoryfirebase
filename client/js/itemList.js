@@ -1,3 +1,5 @@
+
+
 var anchor = document.getElementsByTagName("table")[0];
 var productRef = db.collection("Product");
 productRef
@@ -15,17 +17,14 @@ productRef
 
 
 
-function clearSearch(){
-    document.getElementById('search').value = "";
-}
 
 
 
 function filterSearch(){
     var search =  document.getElementById('search').value;
     
-while (anchor.firstChild) {
-    anchor.removeChild(anchor.firstChild);
+while (anchor.childElementCount>1) {
+    anchor.removeChild(anchor.lastChild);
 }
     
     db.collection("Product").where("description", ">=", search)
@@ -88,7 +87,11 @@ var upcNode = document.createElement("td");
 
 // Only post item if description is included
   if (doc.data().description){
-  anchor.insertBefore(tableRow, anchor.firstChild)
+      anchor.appendChild(tableRow)
+  //anchor.insertBefore(tableRow, anchor.firstChild)
   }
 }
 
+function clearSearch(){
+    document.getElementById('search').value = "";
+}
