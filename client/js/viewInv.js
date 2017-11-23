@@ -55,17 +55,17 @@ var storeID = document.createElement("td");
   var storeIDTextNode = document.createTextNode(doc.data().storeID);         
   storeID.appendChild(storeIDTextNode);  
   
- var userIDNode = document.createElement("td");  
-   userIDNode.className = "bulk Tbl";
-  var userIDTextNode = document.createTextNode(doc.data().userId);   
-  userIDNode.appendChild(userIDTextNode);   
+ var liveNode = document.createElement("td");  
+   liveNode.className = "bulk Tbl";
+  var liveTextNode = document.createTextNode(doc.data().live);   
+  liveNode.appendChild(liveTextNode);   
   
 
 
 //append child nodes
   tableRow.appendChild(dateNode);
   tableRow.appendChild(storeID);
-  tableRow.appendChild(userIDNode);
+  tableRow.appendChild(liveNode);
 
 // Only post item if description is included
   if (doc.data().storeID){

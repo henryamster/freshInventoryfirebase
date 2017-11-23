@@ -1,5 +1,17 @@
 /* item submission logic*/
+    var editP;
+     firebase.auth().onAuthStateChanged(function(user) {
+var uid= user.uid;
+var userRef = db.collection("Users").where("userID",  "==", uid);
 
+userRef.get()
+    .then(function(snapshot) {
+        snapshot.forEach(function(doc) {
+            editP= doc.data().editPermission;
+            console.log(doc.data().storeID, " => ", doc.data())})});
+     });
+            
+            
   var item = document.getElementById("name");
   var upc = document.getElementById("UPC");
   var image = document.getElementById("image");
@@ -11,6 +23,10 @@
  {submitBtn.addEventListener("click", function(){createNewItem()});}
  function createNewItem(){
   // return a key for individual post
+
+  
+            if (editP){
+            
 
 productRef.add({
     bulk: bulk.value,
@@ -25,4 +41,9 @@ productRef.add({
 .catch(function(error) {
     console.error("Error adding document: ", error);
 });
+}
+else {
+    var alert = document.getElementById('alert');
+    alert.innerHTML = "User is not permitted to create new item";
+}
 }
