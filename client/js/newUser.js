@@ -81,7 +81,9 @@ function createNewUser() {
     storeID: sto,
     name:em}).then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
-})
+
+      window.setTimeout(function(){ window.location = "index.html"; },1000);
+    })
 .catch(function(error) {
     console.error("Error adding document: ", error);
 })
