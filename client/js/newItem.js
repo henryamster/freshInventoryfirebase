@@ -4,24 +4,23 @@
   var upc = document.getElementById("UPC");
   var image = document.getElementById("image");
   var bulk = document.getElementById("bulk");
+  var productRef = db.collection("Product");
   console.log(item.value + upc.value + image.value + bulk.value);
   var submitBtn = document.getElementById("submit");
  if (submitBtn)
  {submitBtn.addEventListener("click", function(){createNewItem()});}
- console.log(firebase.database().ref().child('items'));
- console.log(item.value + upc.value + image.value + bulk.value);
  function createNewItem(){
-  var newItem = {
-   name: item.value.toUpperCase(),
-   upc: upc.value,
-   image: image.value,
-   bulk: bulk.value
-  };
   // return a key for individual post
-  var newItemKey = firebase.database().ref().child('items').push().key;
-  // place in array in case multiple users/ new functionality are added in the future.
-  var updates = {};
-  updates['items/' + newItemKey] = newItem;
-  //return updates to database
-  return firebase.database().ref().update(updates);
+
+productRef.add({
+    bulk: bulk.value,
+    upc: upc.value,
+    imageLink: image.value,
+    description: item.value})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
 }

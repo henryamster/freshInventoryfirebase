@@ -62,6 +62,7 @@ function createNewUser() {
   var pa = password.value;
   var pav = passwordVerify.value;
   var sto = store.value;
+  
 
     
   var prom = true;
@@ -81,6 +82,7 @@ function createNewUser() {
           alert(errorCode + " " +errorMessage);
         }
       })
+      
       if (prom){
       var newUser = {
       email: em,
@@ -88,10 +90,26 @@ function createNewUser() {
     };
     // return a key for individual user
       var newUserKey = firebase.database().ref().child('users').push().key;
+      
+      
     var updates = {};
     updates["users/" + newUserKey] = newUser;
     //return updates to database
     
+    
+   
+      
+ firebase.firestore().collection("Users").add({
+    userID: newUserKey,
+    editPermission: false,
+    storeID: sto,
+    name:email})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
       alert("account created for" + em + "!!");
      return firebase.database().ref().update(updates);
       }

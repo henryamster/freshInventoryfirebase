@@ -41,39 +41,6 @@ while (anchor.firstChild) {
     });
 }
 
-/*
-function filterSearch(){
-    var tableNode = document.getElementsByTagName("table")[0];
-    while (tableNode.childNodes.length>2) {
-    tableNode.removeChild(tableNode.firstChild);
-}
-   
-   var search =  document.getElementById('search').value.toUpperCase();
-   var itemsRef = firebase.database().ref('items/');
-  itemsRef.orderByChild('name')
-                
-               .startAt(search)
-                 .endAt(search+"\uf8ff")
-                 
-                 .once("value", function (snapshot){
-                     
-                     console.log(snapshot);
-                  itemLoader(snapshot.val());   
-            });
-                 //  .startAt(search)
-                 //.endAt(search+"\uf8ff")
-/*query
-  .orderByValue()
-  .startAt(search).endAt(search)
-  .on('value', function(snapshot) { 
-      var result = snapshot.val();
-      //do whatever you want.
-      itemLoader(result);
-  });
-  */
-  /*
-}
-*/
 // retrieve items and display them in a table
 function poster(doc){
     console.log(doc.data().description + doc.data().image + doc.data().upc + doc.data().bulk);

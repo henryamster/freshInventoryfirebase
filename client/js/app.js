@@ -12,12 +12,11 @@ firebase.initializeApp(config);
 
 
   //Initialize Firestore DB
+
 var db = firebase.firestore();
-
-
 //OLD STUFF
 
-  var itemsRef = firebase.database().ref('items/');
+//  var itemsRef = firebase.database().ref('items/');
   var usersRef = firebase.database().ref('users/');
   var navVisible=false;
  
