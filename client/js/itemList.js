@@ -76,7 +76,8 @@ var upcNode = document.createElement("td");
   var bulkTextNode = document.createTextNode(doc.data().bulk);   
    if(doc.data().bulk == "true"){ bulkTextNode = "";}
   bulkNode.appendChild(bulkTextNode);   
-  
+   
+   
 
 
 //append child nodes

@@ -134,9 +134,11 @@ nav ul a li.logo{
 #navBtn{
     display:none;
 }
-table{
-   padding-top:0;
+.Tbl{
+   padding:12px;
+   margin:2px;
      font-family: Montserrat;
+     color:white;
 }
 #tableHead{
     background:#f4ff81;
@@ -166,6 +168,24 @@ tr{
 tr:nth-of-type(2){
     background:rgba(0,0,0,0.1);
 }
+
+.qtyButton {
+    width:28px;
+    height:28px;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-weight:100;
+    font-size:14px;
+}
+.plusOne{background-color:lightgreen;}
+.plusFive{background-color:darkgreen;}
+.minusOne{background-color:lightcoral;}
+.minusFive{background-color:red;}
+
+
+
+
 /* Mobile styles */
 
 @media only screen and (max-width: 1075px) { 
@@ -199,5 +219,6 @@ nav ul a li{
     font-size:6vh;
     
 }
+
 
 }

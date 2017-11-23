@@ -1,64 +1,58 @@
+var anchor = document.getElementsByTagName("table")[0];
+var productRef = db.collection("Product");
+productRef
+    .get()
+    .then(function(snapshot) {
+        snapshot.forEach(function(doc) {
+            console.log(doc.id, + doc.upc +" => ", doc.data());
+            
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+
+
 
 
 function clearSearch(){
     document.getElementById('search').value = "";
 }
 
+
+
 function filterSearch(){
-    var tableNode = document.getElementsByTagName("table")[0];
-    while (tableNode.childNodes.length>2) {
-    tableNode.removeChild(tableNode.firstChild);
+    var search =  document.getElementById('search').value;
+    
+while (anchor.firstChild) {
+    anchor.removeChild(anchor.firstChild);
 }
-   
-   var search =  document.getElementById('search').value.toUpperCase();
-   var itemsRef = firebase.database().ref('items/');
-  itemsRef.orderByChild('name')
-                
-               .startAt(search)
-                 .endAt(search+"\uf8ff")
-                 
-                 .once("value", function (snapshot){
-                     
-                     console.log(snapshot);
-                  itemLoader(snapshot.val());   
-            });
-                 //  .startAt(search)
-                 //.endAt(search+"\uf8ff")
-/*query
-  .orderByValue()
-  .startAt(search).endAt(search)
-  .on('value', function(snapshot) { 
-      var result = snapshot.val();
-      //do whatever you want.
-      itemLoader(result);
-  });*/
+    
+    db.collection("Product").where("description", ">=", search)
+    .get()
+    .then(function(snapshot) {
+        snapshot.forEach(function(doc) {
+            console.log(doc.id, " => ", doc.data());
+            poster(doc);
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
 }
 
+// retrieve items and display them in a table
+function poster(doc){
+    console.log(doc.data().description + doc.data().image + doc.data().upc + doc.data().bulk);
 
-var itemsRef = firebase.database().ref('items/');
-  //load items reference
-itemsRef.limitToLast(40).on('value', function(snapshot) {
-  itemLoader(snapshot.val())});
-function itemLoader(snapshot){
-   //load up each individual item
-   for (var itemID in snapshot) {
-    var itemIDRef = firebase.database().ref('items/' + itemID );
-   // console.log(firebase.database().ref('items/' + itemID + '/name'));
-    itemIDRef.on('value', function(snapshot){
-     poster(snapshot.val())})
-}
-};
-function poster(snapshot){
-    console.log(snapshot.name + snapshot.image + snapshot.upc + snapshot.bulk);
 
-var anchor = document.getElementsByTagName("table")[0];
 //create tr
 var tableRow = document.createElement("tr");
 
- if (snapshot.image){
+ if (doc.data().imageLink){
 var imageNode = document.createElement("img");
 var imageTdNode = document.createElement('td');
-  imageNode.src = snapshot.image;
+  imageNode.src = doc.data().imageLink;
   imageNode.className = "listImage";
   imageTdNode.appendChild(imageNode);
  }
@@ -69,36 +63,71 @@ var imageTdNode = document.createElement('td');
 
 var nameNode = document.createElement("td");  
    nameNode.className = "itemName Tbl";
-  var nameTextNode = document.createTextNode(snapshot.name);         
+  var nameTextNode = document.createTextNode(doc.data().description);         
   nameNode.appendChild(nameTextNode);     
 
-var upcNode = document.createElement("td");  
-   upcNode.className = "upc Tbl";
-  var upcTextNode = document.createTextNode(snapshot.upc);         
-  upcNode.appendChild(upcTextNode);  
+var qtyNode = document.createElement("td");  
+  qtyNode.className = "upc Tbl";
+  var qtyTextNode = document.createTextNode("2");         
+  qtyNode.appendChild(qtyTextNode);  
   
  var bulkNode = document.createElement("td");  
    bulkNode.className = "bulk Tbl";
-  var bulkTextNode = document.createTextNode(snapshot.bulk);   
-   if(snapshot.bulk == "true"){ bulkTextNode = "";}
+  var bulkTextNode = document.createTextNode(doc.data().bulk);   
+   if(doc.data().bulk == "true"){ bulkTextNode = "True";}
   bulkNode.appendChild(bulkTextNode);   
+   
+   
+   //minusFiveNode
+    var adjustmentNode = document.createElement('td');
+  adjustmentNode.className = "Adjustment Tbl";
   
-  var invPopUpNode = document.createElement('div');
-  invPopUpNode.className = "inventoryPopup";
-  var 
+  var minusFive = document.createElement('button');
+  minusFive.className="qtyButton minusFive";
+  var minusFiveTextNode = document.createTextNode("-5");
+  minusFive.onclick = function(){//minusFive(INVENTORYLINE)};
+  }
+  minusFive.appendChild(minusFiveTextNode)
+  
+  var minusOne = document.createElement('button');
+  minusOne.className="qtyButton minusOne";
+  var minusOneTextNode = document.createTextNode("-1");
+  minusOne.onclick = function(){//minusOne(INVENTORYLINE)};
+  }
+  minusOne.appendChild(minusOneTextNode)
+  
+  var plusOne = document.createElement('button');
+  plusOne.className="qtyButton plusOne";
+  var plusOneTextNode = document.createTextNode("+1");
+  plusOne.onclick = function(){//plusOne(INVENTORYLINE)};
+  }
+  plusOne.appendChild(plusOneTextNode)
+  
+  var plusFive = document.createElement('button');
+  plusFive.className="qtyButton plusFive";
+  var plusFiveTextNode = document.createTextNode("+5");
+  plusFive.onclick = function(){//plusFive(INVENTORYLINE)};
+  }
+  plusFive.appendChild(plusFiveTextNode)
+  
+  
+  adjustmentNode.appendChild(minusFive);
+  adjustmentNode.appendChild(minusOne);
+  adjustmentNode.appendChild(plusOne);
+  adjustmentNode.appendChild(plusFive);
 
 
 
-  tableRow.appendChild(imageTdNode);
 
+//append child nodes
+ tableRow.appendChild(imageTdNode);
   tableRow.appendChild(nameNode);
-  tableRow.appendChild(upcNode);
   tableRow.appendChild(bulkNode);
-  
-  
+  tableRow.appendChild(qtyNode);
+  tableRow.appendChild(adjustmentNode);
 
-
-  if (snapshot.name){
+// Only post item if description is included
+  if (doc.data().description){
   anchor.insertBefore(tableRow, anchor.firstChild)
   }
 }
