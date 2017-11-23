@@ -63,58 +63,31 @@ function createNewUser() {
   var pav = passwordVerify.value;
   var sto = store.value;
   
-
-    
-  var prom = true;
-    
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(em, pa)
-      .catch(function(error) {
+  firebase.auth().createUserWithEmailAndPassword(em,pa)
+  .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        prom = false;
        
         if (errorCode == "auth/weak-password") {
           alert("The password is too weak.");
         } else {
           alert(errorCode + " " +errorMessage);
         }
-      })
-      
-      if (prom){
-      var newUser = {
-      email: em,
-      store: sto
-    };
-    // return a key for individual user
-      var newUserKey = firebase.database().ref().child('users').push().key;
-      
-      
-    var updates = {};
-    updates["users/" + newUserKey] = newUser;
-    //return updates to database
-    
-    
-   
-      
- firebase.firestore().collection("Users").add({
-    userID: newUserKey,
+      }).then(function(user){
+  db.collection("Users").add({
+    userID: user.uid,
     editPermission: false,
     storeID: sto,
-    name:email})
-.then(function(docRef) {
+    name:em}).then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
 })
 .catch(function(error) {
     console.error("Error adding document: ", error);
-});
-      alert("account created for" + em + "!!");
-     return firebase.database().ref().update(updates);
-      }
-   
-  } 
+})
+    
+ })};
+
 
 /*google.addEventListener("click", function(){createGoogleUser()});
 function createGoogleUser(){
