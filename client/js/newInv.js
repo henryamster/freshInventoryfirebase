@@ -1,16 +1,50 @@
 var anchor = document.getElementsByTagName("table")[0];
+var sID;
+var uid;
+var iid;
 var productRef = db.collection("Product");
+var inventoryLineRef = db.collection("InventoryLine")
 productRef
     .get()
     .then(function(snapshot) {
         snapshot.forEach(function(doc) {
-            console.log(doc.id, + doc.upc +" => ", doc.data());
+            console.log(doc.data().id, + doc.data().upc +" => ", doc.data());
             
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
+    
+firebase.auth().onAuthStateChanged(function(user) {
+uid= user.uid;
+var userRef = db.collection("Users").where("userID",  "==", uid);
+
+userRef.get()
+    .then(function(napshot) {
+        napshot.forEach(function(us) {
+            sID= us.data().storeID;
+            console.log(sID);
+            console.log(us.data().storeID, " => ", us.data())})});
+     });
+            
+
+var inventoryRef= db.collection("Inventory");
+window.setTimeout(function(){
+inventoryRef.add({
+    date: Date.now(),
+    live: true,
+    storeID: sID,
+    userID: uid})
+.then(function(docRef) {
+    console.log("Inventory written with ID: ", docRef.id);
+    iid=docRef.id;
+})
+.catch(function(error) {
+    console.error("Error adding Inventory: ", error);
+});
+  },1000);
+
 
 
 
@@ -33,6 +67,10 @@ while (anchor.childElementCount>1) {
     .then(function(snapshot) {
         snapshot.forEach(function(doc) {
             console.log(doc.id, " => ", doc.data());
+            
+            
+
+
             poster(doc);
         });
     })
@@ -44,7 +82,18 @@ while (anchor.childElementCount>1) {
 // retrieve items and display them in a table
 function poster(doc){
     console.log(doc.data().description + doc.data().image + doc.data().upc + doc.data().bulk);
-
+    
+window.setTimeout(function(){
+inventoryLineRef.add({
+    Inventory:iid,
+    Product:doc.id,
+    qty:0
+}).then(function(sShot){sShot.forEach(function(iL){
+    console.log("Inventory Line written with ID: ", iL.id);
+})}).catch(function(error) {
+    console.error("error adding Inventory Line: ", error);
+})
+  },1000);
 
 //create tr
 var tableRow = document.createElement("tr");
