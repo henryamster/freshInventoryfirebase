@@ -1,7 +1,8 @@
 var anchor = document.getElementsByTagName("table")[0];
-var sID;
-var uid;
-var iid;
+var sID = "";
+var uid = "";
+var iid = "";
+var ilid = "";
 var productRef = db.collection("Product");
 var inventoryLineRef = db.collection("InventoryLine")
 productRef
@@ -16,6 +17,8 @@ productRef
         console.log("Error getting documents: ", error);
     });
     
+    
+    
 firebase.auth().onAuthStateChanged(function(user) {
 uid= user.uid;
 var userRef = db.collection("Users").where("userID",  "==", uid);
@@ -23,14 +26,17 @@ var userRef = db.collection("Users").where("userID",  "==", uid);
 userRef.get()
     .then(function(napshot) {
         napshot.forEach(function(us) {
-            sID= us.data().storeID;
+            sID= setsID(us.data().storeID);
             console.log(sID);
             console.log(us.data().storeID, " => ", us.data())})});
-     });
-            
+    
+});     
 
+console.log(sID);
+if(sID != ""){
+    console.log(uid + " " + sID + ' REACHING INV')
 var inventoryRef= db.collection("Inventory");
-window.setTimeout(function(){
+//window.setTimeout(function(){
 inventoryRef.add({
     date: Date.now(),
     live: true,
@@ -38,13 +44,13 @@ inventoryRef.add({
     userID: uid})
 .then(function(docRef) {
     console.log("Inventory written with ID: ", docRef.id);
-    iid=docRef.id;
+    iid=setsID(docRef.id);
 })
 .catch(function(error) {
     console.error("Error adding Inventory: ", error);
 });
-  },1000);
-
+//  },2000);
+}
 
 
 
@@ -53,6 +59,8 @@ function clearSearch(){
     document.getElementById('search').value = "";
 }
 
+function setsID(sid){
+return sid};
 
 
 function filterSearch(){
@@ -71,7 +79,7 @@ while (anchor.childElementCount>1) {
             
 
 
-            poster(doc);
+            poster(doc,iid);
         });
     })
     .catch(function(error) {
@@ -81,9 +89,9 @@ while (anchor.childElementCount>1) {
 
 // retrieve items and display them in a table
 function poster(doc){
-    console.log(doc.data().description + doc.data().image + doc.data().upc + doc.data().bulk);
-    
-window.setTimeout(function(){
+    ilid = setsID(doc.id);
+//window.setTimeout(function(){
+if(iid!=""){
 inventoryLineRef.add({
     Inventory:iid,
     Product:doc.id,
@@ -93,7 +101,8 @@ inventoryLineRef.add({
 })}).catch(function(error) {
     console.error("error adding Inventory Line: ", error);
 })
-  },1000);
+}
+//},2000);
 
 //create tr
 var tableRow = document.createElement("tr");
@@ -114,10 +123,11 @@ var nameNode = document.createElement("td");
    nameNode.className = "itemName Tbl";
   var nameTextNode = document.createTextNode(doc.data().description);         
   nameNode.appendChild(nameTextNode);     
+  
 
 var qtyNode = document.createElement("td");  
   qtyNode.className = "upc Tbl";
-  var qtyTextNode = document.createTextNode("2");         
+  var qtyTextNode = document.createTextNode(doc.data().qty);         
   qtyNode.appendChild(qtyTextNode);  
   
  var bulkNode = document.createElement("td");  
@@ -134,29 +144,25 @@ var qtyNode = document.createElement("td");
   var minusFive = document.createElement('button');
   minusFive.className="qtyButton minusFive";
   var minusFiveTextNode = document.createTextNode("-5");
-  minusFive.onclick = function(){//minusFive(INVENTORYLINE)};
-  }
+  minusFive.onclick = function(){changeQty(iid, ilid, -5)};
   minusFive.appendChild(minusFiveTextNode)
   
   var minusOne = document.createElement('button');
   minusOne.className="qtyButton minusOne";
   var minusOneTextNode = document.createTextNode("-1");
-  minusOne.onclick = function(){//minusOne(INVENTORYLINE)};
-  }
+  minusOne.onclick = function(){changeQty(iid, ilid, -1)};
   minusOne.appendChild(minusOneTextNode)
   
   var plusOne = document.createElement('button');
   plusOne.className="qtyButton plusOne";
   var plusOneTextNode = document.createTextNode("+1");
-  plusOne.onclick = function(){//plusOne(INVENTORYLINE)};
-  }
+  plusOne.onclick = function(){changeQty(iid, ilid, 1)};
   plusOne.appendChild(plusOneTextNode)
   
   var plusFive = document.createElement('button');
   plusFive.className="qtyButton plusFive";
   var plusFiveTextNode = document.createTextNode("+5");
-  plusFive.onclick = function(){//plusFive(INVENTORYLINE)};
-  }
+  plusFive.onclick = function(){changeQty(iid, ilid, 5)};
   plusFive.appendChild(plusFiveTextNode)
   
   
@@ -180,4 +186,21 @@ var qtyNode = document.createElement("td");
      anchor.appendChild(tableRow)
   }
 }
+/*function changeQty(amt, iid,ilid){
+var ilDocRef = db.collection("InventoryLine").where("Inventory","==", iid).where("Product", "==", ilid);
 
+
+
+return db.runTransaction(function(transaction) {
+    // This code may get re-run multiple times if there are conflicts.
+    return transaction.get(ilDocRef).then(function(ilDoc) {
+        var newIL = ilDocRef.data().qty + 1;
+        transaction.update(ilDocRef, { qty: newIL });
+    });
+}).then(function() {
+    console.log("Transaction successfully committed!");
+}).catch(function(error) {
+    console.log("Transaction failed: ", error);
+});
+}
+*/
