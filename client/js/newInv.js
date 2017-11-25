@@ -4,7 +4,8 @@ var uid = "";
 var iid = "";
 var ilid = "";
 var productRef = db.collection("Product");
-var inventoryLineRef = db.collection("InventoryLine")
+var inventoryLineRef = db.collection("InventoryLine");
+var inventoryRef= db.collection("Inventory");
 productRef
     .get()
     .then(function(snapshot) {
@@ -18,7 +19,8 @@ productRef
     });
     
     
-    
+let userPromise = new Promise(function(res,rej){
+//usPr
 firebase.auth().onAuthStateChanged(function(user) {
 uid= user.uid;
 var userRef = db.collection("Users").where("userID",  "==", uid);
@@ -26,31 +28,45 @@ var userRef = db.collection("Users").where("userID",  "==", uid);
 userRef.get()
     .then(function(napshot) {
         napshot.forEach(function(us) {
-            sID= setsID(us.data().storeID);
+            sID= us.data().storeID;
             console.log(sID);
             console.log(us.data().storeID, " => ", us.data())})});
     
 });     
 
-console.log(sID);
-if(sID != ""){
-    console.log(uid + " " + sID + ' REACHING INV')
-var inventoryRef= db.collection("Inventory");
-//window.setTimeout(function(){
-inventoryRef.add({
+if (sID!="")
+{res(sID);}
+else 
+{rej('error');}
+});
+
+userPromise.then(function(res){
+sID=res;}).catch(function(res){console.log(res);})
+
+
+let inventoryPromise = new Promise(function(res,rej){
+//invPr
+    inventoryRef.add({
     date: Date.now(),
     live: true,
     storeID: sID,
     userID: uid})
 .then(function(docRef) {
     console.log("Inventory written with ID: ", docRef.id);
-    iid=setsID(docRef.id);
+    iid=docRef.id;
 })
 .catch(function(error) {
     console.error("Error adding Inventory: ", error);
 });
-//  },2000);
-}
+if (iid!=""){ res(iid);}
+    else{rej(iid);}
+});
+inventoryPromise.then(function(res){
+    iid=res;
+}).catch(function(res){console.log(res)});
+
+
+
 
 
 
@@ -59,8 +75,7 @@ function clearSearch(){
     document.getElementById('search').value = "";
 }
 
-function setsID(sid){
-return sid};
+
 
 
 function filterSearch(){
@@ -89,16 +104,14 @@ while (anchor.childElementCount>1) {
 
 // retrieve items and display them in a table
 function poster(doc){
-    ilid = setsID(doc.id);
+    ilid = doc.id;
 //window.setTimeout(function(){
 if(iid!=""){
 inventoryLineRef.add({
     Inventory:iid,
     Product:doc.id,
     qty:0
-}).then(function(sShot){sShot.forEach(function(iL){
-    console.log("Inventory Line written with ID: ", iL.id);
-})}).catch(function(error) {
+}).catch(function(error) {
     console.error("error adding Inventory Line: ", error);
 })
 }
@@ -186,7 +199,7 @@ var qtyNode = document.createElement("td");
      anchor.appendChild(tableRow)
   }
 }
-/*function changeQty(amt, iid,ilid){
+function changeQty(amt, iid,ilid){
 var ilDocRef = db.collection("InventoryLine").where("Inventory","==", iid).where("Product", "==", ilid);
 
 
@@ -194,7 +207,7 @@ var ilDocRef = db.collection("InventoryLine").where("Inventory","==", iid).where
 return db.runTransaction(function(transaction) {
     // This code may get re-run multiple times if there are conflicts.
     return transaction.get(ilDocRef).then(function(ilDoc) {
-        var newIL = ilDocRef.data().qty + 1;
+        var newIL = ilDocRef.data().qty + amt;
         transaction.update(ilDocRef, { qty: newIL });
     });
 }).then(function() {
@@ -203,4 +216,3 @@ return db.runTransaction(function(transaction) {
     console.log("Transaction failed: ", error);
 });
 }
-*/
